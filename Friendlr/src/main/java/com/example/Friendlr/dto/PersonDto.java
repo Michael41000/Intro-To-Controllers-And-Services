@@ -1,13 +1,10 @@
-package com.example.Friendlr.entity;
+package com.example.Friendlr.dto;
 
-import java.util.Set;
+public class PersonDto {
 
-public class Person {
-	
 	private Long id;
 	private String firstName;
 	private String lastName;
-	private Set<Person> friends;
 	
 	public Long getId() {
 		return id;
@@ -27,15 +24,4 @@ public class Person {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public Set<Person> getFriends() {
-		return friends;
-	}
-	public void setFriends(Set<Person> friends) {
-		this.friends = friends;
-	}
-	
-	
-	
-	
-
 }

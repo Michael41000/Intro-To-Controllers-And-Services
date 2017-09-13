@@ -2,52 +2,57 @@ package com.example.Friendlr.service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.example.Friendlr.dto.PersonDto;
 import com.example.Friendlr.entity.Person;
+import com.example.Friendlr.mapper.PersonMapper;
 
 @Service
 public class PersonService {
 
 	private static Long index = (long) 0;
 	private Set<Person> persons;
+	private PersonMapper personMapper;
 	
-	public PersonService()
+	public PersonService(PersonMapper personMapper)
 	{
 		persons = new HashSet<Person>();
+		this.personMapper = personMapper;
 	}
 	
-	public Set<Person> getPersons()
+	public Set<PersonDto> getPersons()
 	{
-		return persons;
+		return persons.stream().map(personMapper::toPersonDto).collect(Collectors.toSet());
 	}
 	
-	public Person getPerson(Long id)
+	public PersonDto getPerson(Long id)
 	{
 		for (Person person : persons)
 		{
 			if (person.getId().equals(id))
 			{
-				return person;
+				return personMapper.toPersonDto(person);
 			}
 		}
 		return null;
 	}
 	
-	public Person createPerson(Person person)
+	public PersonDto createPerson(PersonDto personDto)
 	{
-		if (person == null)
+		if (personDto == null)
 		{
 			return null;
 		}
-		person.setId(index++);
-		persons.add(person);
-		return person;
+		personDto.setId(index++);
+		persons.add(personMapper.toPerson(personDto));
+		return personDto;
 	}
 
-	public Person editPerson(Long id, Person person) {
-		if (person == null)
+	public PersonDto editPerson(Long id, PersonDto personDto) {
+		if (personDto == null)
 		{
 			return null;
 		}
@@ -56,23 +61,23 @@ public class PersonService {
 		{
 			if (p.getId().equals(id))
 			{
-				person.setId(id);
+				personDto.setId(id);
 				persons.remove(p);
-				persons.add(person);
-				return person;
+				persons.add(personMapper.toPerson(personDto));
+				return personDto;
 			}
 		}
 		
 		return null;
 	}
 
-	public Person deletePerson(Long id) {
+	public PersonDto deletePerson(Long id) {
 		for (Person person : persons)
 		{
 			if (person.getId().equals(id))
 			{
 				persons.remove(person);
-				return person;
+				return personMapper.toPersonDto(person);
 			}
 		}
 		return null;
