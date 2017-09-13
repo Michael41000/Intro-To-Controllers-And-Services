@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Friendlr.dto.PersonDto;
 import com.example.Friendlr.entity.Person;
 import com.example.Friendlr.service.PersonService;
 
@@ -28,28 +29,28 @@ public class PersonController {
 	}
 	
 	@GetMapping
-	public Set<Person> getPersons()
+	public Set<PersonDto> getPersons()
 	{
 		return personService.getPersons();
 	}
 	
 	@GetMapping("{id}")
-	public Person getPerson(@PathVariable Long id, HttpServletResponse response)
+	public PersonDto getPerson(@PathVariable Long id, HttpServletResponse response)
 	{
-		Person person = personService.getPerson(id);
+		PersonDto personDto = personService.getPerson(id);
 		
-		if (person == null)
+		if (personDto == null)
 		{
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		}
-		return person;
+		return personDto;
 	}
 	
 	@PostMapping
-	public Person createPerson(@RequestBody Person person, HttpServletResponse response)
+	public PersonDto createPerson(@RequestBody PersonDto personDto, HttpServletResponse response)
 	{
-		Person createdPerson = personService.createPerson(person);
-		if (createdPerson == null)
+		PersonDto createdPersonDto = personService.createPerson(personDto);
+		if (createdPersonDto == null)
 		{
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		}
@@ -57,29 +58,29 @@ public class PersonController {
 		{
 			response.setStatus(HttpServletResponse.SC_CREATED);
 		}
-		return createdPerson;
+		return createdPersonDto;
 	}
 	
 	@PutMapping("{id}")
-	public Person editPerson(@PathVariable Long id, @RequestBody Person person, HttpServletResponse response)
+	public PersonDto editPerson(@PathVariable Long id, @RequestBody PersonDto personDto, HttpServletResponse response)
 	{
-		Person editedPerson = personService.editPerson(id, person);
-		if (editedPerson == null)
+		PersonDto editedPersonDto = personService.editPerson(id, personDto);
+		if (editedPersonDto == null)
 		{
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		}
-		return editedPerson;
+		return editedPersonDto;
 	}
 	
 	@DeleteMapping("{id}")
-	public Person deletePerson(@PathVariable Long id, HttpServletResponse response)
+	public PersonDto deletePerson(@PathVariable Long id, HttpServletResponse response)
 	{
-		Person deletedPerson = personService.deletePerson(id);
-		if (deletedPerson == null)
+		PersonDto deletedPersonDto = personService.deletePerson(id);
+		if (deletedPersonDto == null)
 		{
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		}
-		return deletedPerson;
+		return deletedPersonDto;
 	}
 
 }
