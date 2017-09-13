@@ -1,5 +1,7 @@
 package com.example.Friendlr.mapper;
 
+import java.util.Set;
+
 import org.mapstruct.Mapper;
 
 import com.example.Friendlr.dto.PersonDto;
@@ -11,4 +13,8 @@ public interface PersonMapper {
 	PersonDto toPersonDto(Person person);
 	
 	Person toPerson(PersonDto personDto);
+	
+	Set<PersonDto> toPersonDtoSet(Set<Person> persons);
+	
+	Set<Person> toSetPersonSet(Set<PersonDto> personDtos);
 }

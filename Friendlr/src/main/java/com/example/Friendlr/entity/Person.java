@@ -1,5 +1,6 @@
 package com.example.Friendlr.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Person {
@@ -7,7 +8,7 @@ public class Person {
 	private Long id;
 	private String firstName;
 	private String lastName;
-	private Set<Person> friends;
+	private Set<Person> friends = new HashSet<Person>();
 	
 	public Long getId() {
 		return id;

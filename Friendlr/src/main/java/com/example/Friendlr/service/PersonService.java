@@ -25,7 +25,7 @@ public class PersonService {
 	
 	public Set<PersonDto> getPersons()
 	{
-		return persons.stream().map(personMapper::toPersonDto).collect(Collectors.toSet());
+		return personMapper.toPersonDtoSet(persons);
 	}
 	
 	public PersonDto getPerson(Long id)
@@ -81,5 +81,41 @@ public class PersonService {
 			}
 		}
 		return null;
+	}
+
+	private Person getPersonEntity(Long id)
+	{
+		for (Person person : persons)
+		{
+			if (person.getId().equals(id))
+			{
+				return person;
+			}
+		}
+		return null;
+	}
+	
+	public Set<PersonDto> getFriends(Long id) {
+		PersonDto personDto = getPerson(id);
+		
+		if (personDto == null)
+		{
+			return null;
+		}
+		
+		return personMapper.toPersonDtoSet(getPersonEntity(id).getFriends());
+	}
+
+	public PersonDto addFriend(Long id, Long friendId) {
+		PersonDto personDto = getPerson(id);
+		PersonDto friendDto = getPerson(friendId);
+		
+		if (personDto == null || friendDto == null)
+		{
+			return null;
+		}
+		
+		getPersonEntity(id).getFriends().add(personMapper.toPerson(friendDto));
+		return friendDto;
 	}
 }

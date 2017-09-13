@@ -82,5 +82,29 @@ public class PersonController {
 		}
 		return deletedPersonDto;
 	}
+	
+	@GetMapping("{id}/friends")
+	public Set<PersonDto> getFriends(@PathVariable Long id, HttpServletResponse response)
+	{
+		Set<PersonDto> friends = personService.getFriends(id);
+		
+		if (friends == null)
+		{
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		}
+		return friends;
+	}
+	
+	@PostMapping("{id}/friends/{friendId}")
+	public PersonDto addFriend(@PathVariable Long id, @PathVariable Long friendId, HttpServletResponse response)
+	{
+		PersonDto friendDto = personService.addFriend(id, friendId);
+		
+		if (friendDto == null)
+		{
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		}
+		return friendDto;
+	}
 
 }
