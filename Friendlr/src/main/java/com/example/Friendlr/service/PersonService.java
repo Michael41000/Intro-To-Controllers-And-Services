@@ -62,7 +62,9 @@ public class PersonService {
 			{
 				personDto.setId(id);
 				persons.remove(p);
-				persons.add(personMapper.toPerson(personDto));
+				p.setFirstName(personDto.getFirstName());
+				p.setLastName(personDto.getLastName());
+				persons.add(p);
 				return personDto;
 			}
 		}
