@@ -75,6 +75,14 @@ public class PersonService {
 	public PersonDto deletePerson(Long id) {
 		for (Person person : persons)
 		{
+			if (person.getFriends().contains(getPersonEntity(id)))
+			{
+				person.getFriends().remove(getPersonEntity(id));
+			}
+		}
+		
+		for (Person person : persons)
+		{
 			if (person.getId().equals(id))
 			{
 				persons.remove(person);
