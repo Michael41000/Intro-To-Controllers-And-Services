@@ -16,5 +16,5 @@ public interface PersonMapper {
 	
 	Set<PersonDto> toPersonDtoSet(Set<Person> persons);
 	
-	Set<Person> toSetPersonSet(Set<PersonDto> personDtos);
+	Set<Person> toPersonSet(Set<PersonDto> personDtos);
 }

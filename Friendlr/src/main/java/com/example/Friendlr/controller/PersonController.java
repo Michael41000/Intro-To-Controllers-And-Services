@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Friendlr.dto.PersonDto;
-import com.example.Friendlr.entity.Person;
 import com.example.Friendlr.service.PersonService;
 
 @RestController
@@ -99,6 +98,18 @@ public class PersonController {
 	public PersonDto addFriend(@PathVariable Long id, @PathVariable Long friendId, HttpServletResponse response)
 	{
 		PersonDto friendDto = personService.addFriend(id, friendId);
+		
+		if (friendDto == null)
+		{
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		}
+		return friendDto;
+	}
+	
+	@DeleteMapping("{id}/friends/{friendId}")
+	public PersonDto deleteFriend(@PathVariable Long id, @PathVariable Long friendId, HttpServletResponse response)
+	{
+		PersonDto friendDto = personService.deleteFriend(id, friendId);
 		
 		if (friendDto == null)
 		{

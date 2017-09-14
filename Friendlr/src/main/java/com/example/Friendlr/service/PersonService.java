@@ -2,7 +2,6 @@ package com.example.Friendlr.service;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -115,7 +114,32 @@ public class PersonService {
 			return null;
 		}
 		
-		getPersonEntity(id).getFriends().add(personMapper.toPerson(friendDto));
+		getPersonEntity(id).getFriends().add(getPersonEntity(friendId));
+		getPersonEntity(friendId).getFriends().add(getPersonEntity(id));
 		return friendDto;
+	}
+	
+	public PersonDto deleteFriend(Long id, Long friendId) {
+		PersonDto personDto = getPerson(id);
+		PersonDto friendDto = getPerson(friendId);
+		
+		if (personDto == null || friendDto == null)
+		{
+			return null;
+		}
+		
+		Set<Person> personFriends = getPersonEntity(id).getFriends();
+		Set<Person> friendFriends = getPersonEntity(friendId).getFriends();
+		
+		if (!personFriends.contains(getPersonEntity(friendId)) || !friendFriends.contains(getPersonEntity(id)))
+		{
+			return null;
+		}
+		
+		getPersonEntity(id).getFriends().remove(getPersonEntity(friendId));
+		getPersonEntity(friendId).getFriends().remove(getPersonEntity(id));
+		
+		return friendDto;
+		
 	}
 }
